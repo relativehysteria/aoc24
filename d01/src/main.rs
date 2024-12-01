@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
 fn main() {
-    let input = include_str!("../input");
+    let input = &include_str!("../input");
 
     let (mut a, mut b): (Vec<i32>, Vec<i32>) = input.lines()
         .filter_map(|line| line.split_once("   "))
@@ -21,17 +21,7 @@ fn part1(a: &[i32], b: &[i32]) -> i32 {
 }
 
 fn part2(a: &[i32], b: &[i32]) -> i32 {
-    let histogram = |arr: &[i32]| {
-        arr.iter().fold(HashMap::new(), |mut histogram, &val| {
-            *histogram.entry(val).or_insert(0) += 1;
-            histogram
-        })
-    };
-
-    let a_hist = histogram(a);
-    let b_hist = histogram(b);
-
-    a_hist.iter()
-        .map(|(key, &val)| key * val * b_hist.get(key).unwrap_or(&0))
-        .sum()
+    let mut hist: HashMap<i32, i32> = HashMap::with_capacity(b.len());
+    for &val in b { *hist.entry(val).or_insert(0) += 1 };
+    a.iter().map(|n| n * hist.get(n).unwrap_or(&0)).sum::<i32>()
 }
