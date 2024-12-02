@@ -5,7 +5,8 @@ fn main() {
 
     let (mut a, mut b): (Vec<i32>, Vec<i32>) = input.lines()
         .filter_map(|line| line.split_once("   "))
-        .map(|(a, b)| (a.parse::<i32>().unwrap(), b.parse::<i32>().unwrap()))
+        .filter_map(|(a, b)|
+            Some((a.parse::<i32>().ok()?, b.parse::<i32>().ok()?)))
         .unzip();
 
     a.sort_unstable();
