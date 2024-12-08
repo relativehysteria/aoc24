@@ -1,3 +1,5 @@
+// I didn't have time for this one :(
+
 use std::collections::HashSet;
 
 fn main() {
@@ -164,7 +166,8 @@ pub fn part2(input: &str) -> usize {
     let mut state = init_state.clone();
     let mut visited = init_visited.clone();
     loop {
-        // advance the outer route one step so we can take its location as the start point
+        // advance the outer route one step so we can take its location as the
+        // start point
         if !init_state.evolve(|i, j| obstacles.visited(i, j, 0)) {
             break; // left the grid
         }
@@ -172,8 +175,10 @@ pub fn part2(input: &str) -> usize {
         if !added.contains(&(init_state.i, init_state.j)) {
             added.insert((init_state.i, init_state.j));
             loop {
-                // last is the location of the obstacle added for this point in original loop
-                if !state.evolve(|i, j| obstacles.visited(i, j, 0) || (i, j) == (init_state.i, init_state.j)) {
+                // last is the location of the obstacle added for this point in
+                // original loop
+                if !state.evolve(|i, j| obstacles.visited(i, j, 0) || (i, j) ==
+                        (init_state.i, init_state.j)) {
                     break; // left the grid
                 }
                 if visited.visit(state.i, state.j, state.dir as u32) {
